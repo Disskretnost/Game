@@ -1,50 +1,45 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody rigidbody;
-    public float speed = 3f;
-    private Animator animator;
-    public float rotationSpeed = 20f;
-
-    private bool isFirstClick = true;
+    public float walkSpeed = 2;
+    public float runSpeed = 6;
+    public float turnSmoothTime = 0.2f;
+    float turnSmoothVelocity;
+    public float speedSmoothTime = 0.1f;
+    float speedSmoothVelocity;
+    float currentSpeed;
+    Animator animator;
+    Transform cameraT;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-        rigidbody = GetComponent<Rigidbody>();
+        cameraT = Camera.main.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        Vector2 inputDir = input.normalized;
 
-        Vector3 directionVector = new Vector3(h, 0, v);
-        if (directionVector.magnitude > 0.05f)
+        if (inputDir != Vector2.zero)
         {
-            if (isFirstClick)
-            {
-                isFirstClick = false;
-                directionVector *= 0.5f; // Уменьшение скорости перемещения
-            }
-
-            Quaternion targetRotation = Quaternion.LookRotation(directionVector);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-        }
-        else
-        {
-            isFirstClick = true; // Сброс флага при отсутствии ввода
+            float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y;
+            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
         }
 
-        animator.SetFloat("speed", Mathf.Clamp(directionVector.magnitude, 0, 1));
-        rigidbody.velocity = directionVector.normalized * speed* 2;
+        bool running = Input.GetKey(KeyCode.LeftShift);
+        float targetSpeed = (running ? runSpeed : walkSpeed) * inputDir.magnitude;
+        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
+
+        transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
+
+        float animationSpeedPercent = (running ? 1 : .5f) * inputDir.magnitude;
+        animator.SetFloat("speed", animationSpeedPercent);
     }
 }
-
-
-
-

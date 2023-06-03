@@ -205,8 +205,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23513dec1ea48154399b1416851b7d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  rotationSpeed: 10
+  walkSpeed: 2
+  runSpeed: 6
+  turnSmoothTime: 0.2
+  speedSmoothTime: 0.1
 --- !u!136 &578558560
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -437,6 +439,7 @@ MonoBehaviour:
   target: {fileID: 1862031057}
   dstFromTarget: 2
   pitchMinMax: {x: -40, y: 85}
+  lockCursor: 0
   rotationSmoothTime: 0.12
 --- !u!1 &1496188489
 GameObject:

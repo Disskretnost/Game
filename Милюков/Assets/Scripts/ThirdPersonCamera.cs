@@ -8,13 +8,21 @@ public class ThirdPersonCamera : MonoBehaviour
     public Transform target;
     public float dstFromTarget = 2;
     public Vector2 pitchMinMax = new Vector2(-40, 85);
-
+    public bool lockCursor;
     public float rotationSmoothTime = .12f;
     Vector3 rotationSmoothVelocity;
     Vector3 currentRotation;
 
     float yaw;
     float pitch;
+    void Start()
+    {
+        if (lockCursor)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
