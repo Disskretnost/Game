@@ -193,20 +193,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 88b9313c4396e484cbf4af872a969288, type: 3}
   m_PrefabInstance: {fileID: 382783673}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &578558559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 578558556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23513dec1ea48154399b1416851b7d1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 2
-  rotationSpeed: 10
 --- !u!136 &578558560
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -237,6 +223,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &578558562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578558556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4110670f91b42b44a2e5bd826ed012b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 2
+  runSpeed: 6
+  turnSmoothTime: 0.2
+  speedSmoothTime: 0.1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
